@@ -5,6 +5,8 @@ void main() {
   runApp(const MyApp());
 }
 
+/// Root widget aplikasi MyPortfolio Mobile.
+/// Menginisialisasi tema Material 3 dan mengatur halaman awal ke [MyHomePage].
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
