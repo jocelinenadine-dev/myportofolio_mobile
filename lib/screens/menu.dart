@@ -1,4 +1,6 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
+import 'package:myportofolio_mobile/widgets/left_drawer.dart';
+import 'package:myportofolio_mobile/widgets/project_card.dart';
 
 /// Model data untuk merepresentasikan setiap item tombol aksi pada halaman menu utama.
 /// Menyimpan nama tombol ([name]), ikon ([icon]), dan warna latar ([color]).
@@ -11,7 +13,8 @@ class ItemHomepage {
 }
 
 /// Halaman utama aplikasi MyPortfolio Mobile yang bersifat statis ([StatelessWidget]).
-/// Menampilkan kartu identitas pemilik ([InfoCard]) dan kisi tombol aksi ([ItemCard]).
+/// Menampilkan kartu identitas pemilik ([InfoCard]), drawer navigasi ([LeftDrawer]),
+/// dan kisi tombol aksi ([ItemCard]).
 class MyHomePage extends StatelessWidget {
   MyHomePage({super.key});
 
@@ -27,7 +30,7 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Scaffold menyediakan struktur visual dasar halaman (AppBar, Body, SnackBar).
+    // Scaffold menyediakan struktur visual dasar halaman (AppBar, Drawer, Body, SnackBar).
     return Scaffold(
       // AppBar menampilkan bar bagian atas halaman aplikasi.
       appBar: AppBar(
@@ -39,7 +42,9 @@ class MyHomePage extends StatelessWidget {
           ),
         ),
         backgroundColor: Theme.of(context).colorScheme.primary,
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
+      drawer: const LeftDrawer(),
       // Body halaman utama dengan padding di sekelilingnya.
       body: SingleChildScrollView(
         child: Padding(
@@ -128,58 +133,6 @@ class InfoCard extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-/// Komponen kartu tombol aksi interaktif yang menampilkan ikon, label,
-/// serta warna latar spesifik dari objek [ItemHomepage].
-class ItemCard extends StatelessWidget {
-  final ItemHomepage item;
-
-  const ItemCard(this.item, {super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      // Menggunakan warna spesifik dari masing-masing objek ItemHomepage.
-      color: item.color,
-      borderRadius: BorderRadius.circular(12),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(12),
-        // Aksi ketika kartu ditekan oleh pengguna.
-        onTap: () {
-          // Menampilkan SnackBar dengan pesan interaktif sesuai tombol yang ditekan.
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(
-              SnackBar(
-                content: Text("Kamu telah menekan tombol ${item.name}!"),
-              ),
-            );
-        },
-        child: Container(
-          padding: const EdgeInsets.all(8),
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  item.icon,
-                  color: Colors.white,
-                  size: 30.0,
-                ),
-                const Padding(padding: EdgeInsets.all(3)),
-                Text(
-                  item.name,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(color: Colors.white),
-                ),
-              ],
-            ),
-          ),
         ),
       ),
     );
