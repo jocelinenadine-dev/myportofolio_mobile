@@ -1,9 +1,10 @@
 import 'package:material_ui/material_ui.dart';
+import 'package:myportofolio_mobile/screens/experience_form.dart';
 import 'package:myportofolio_mobile/screens/menu.dart';
 import 'package:myportofolio_mobile/screens/project_form.dart';
 
-/// Komponen kartu tombol aksi interaktif yang menampilkan ikon, label,
-/// serta warna latar spesifik dari objek [ItemHomepage].
+/// Komponen kartu tombol aksi interaktif yang menampilkan ikon berbingkai,
+/// label, serta warna latar spesifik dari objek [ItemHomepage].
 class ItemCard extends StatelessWidget {
   final ItemHomepage item;
 
@@ -12,23 +13,25 @@ class ItemCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      // Menggunakan warna spesifik dari masing-masing objek ItemHomepage.
       color: item.color,
-      borderRadius: BorderRadius.circular(12),
+      elevation: 3.0,
+      shadowColor: item.color.withValues(alpha: 0.35),
+      borderRadius: BorderRadius.circular(16.0),
       child: InkWell(
-        borderRadius: BorderRadius.circular(12),
-        // Area responsif terhadap sentuhan
+        borderRadius: BorderRadius.circular(16.0),
         onTap: () {
-          // Memunculkan SnackBar ketika diklik
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
             ..showSnackBar(
               SnackBar(
+                behavior: SnackBarBehavior.floating,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
                 content: Text("Kamu telah menekan tombol ${item.name}!"),
               ),
             );
 
-          // Navigate ke halaman yang sesuai
           if (item.name == "Tambah Proyek") {
             Navigator.push(
               context,
@@ -36,24 +39,42 @@ class ItemCard extends StatelessWidget {
                 builder: (context) => const ProjectFormPage(),
               ),
             );
+          } else if (item.name == "Tambah Pengalaman") {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const ExperienceFormPage(),
+              ),
+            );
           }
         },
         child: Container(
-          padding: const EdgeInsets.all(8),
+          padding: const EdgeInsets.all(14.0),
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
-                  item.icon,
-                  color: Colors.white,
-                  size: 30.0,
+                Container(
+                  padding: const EdgeInsets.all(12.0),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withValues(alpha: 0.20),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    item.icon,
+                    color: Colors.white,
+                    size: 28.0,
+                  ),
                 ),
-                const Padding(padding: EdgeInsets.all(3)),
+                const SizedBox(height: 12.0),
                 Text(
                   item.name,
                   textAlign: TextAlign.center,
-                  style: const TextStyle(color: Colors.white),
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 13.5,
+                  ),
                 ),
               ],
             ),
