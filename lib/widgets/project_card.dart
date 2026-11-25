@@ -2,6 +2,10 @@ import 'package:material_ui/material_ui.dart';
 import 'package:myportofolio_mobile/screens/experience_form.dart';
 import 'package:myportofolio_mobile/screens/menu.dart';
 import 'package:myportofolio_mobile/screens/project_form.dart';
+import 'package:myportofolio_mobile/screens/project_list_screen.dart';
+import 'package:myportofolio_mobile/services/auth_state.dart';
+import 'package:myportofolio_mobile/widgets/auth_guard.dart';
+import 'package:provider/provider.dart';
 
 /// Komponen kartu tombol aksi interaktif yang menampilkan ikon berbingkai,
 /// label, serta warna latar spesifik dari objek [ItemHomepage].
@@ -19,7 +23,7 @@ class ItemCard extends StatelessWidget {
       borderRadius: BorderRadius.circular(16.0),
       child: InkWell(
         borderRadius: BorderRadius.circular(16.0),
-        onTap: () {
+        onTap: () async {
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
             ..showSnackBar(
@@ -32,12 +36,19 @@ class ItemCard extends StatelessWidget {
               ),
             );
 
-          if (item.name == "Tambah Proyek") {
+          if (item.name == "Lihat Proyek") {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const ProjectFormPage(),
+                builder: (context) => const ProjectListScreen(),
               ),
+            );
+          } else if (item.name == "Tambah Proyek") {
+            final loggedIn = await ensureLoggedIn(context);
+            if (!loggedIn || !context.mounted) return;
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const ProjectFormPage()),
             );
           } else if (item.name == "Tambah Pengalaman") {
             Navigator.push(
@@ -46,6 +57,20 @@ class ItemCard extends StatelessWidget {
                 builder: (context) => const ExperienceFormPage(),
               ),
             );
+          } else if (item.name == "Logout") {
+            final authState = context.read<AuthState>();
+            if (authState.isLoggedIn) {
+              await authState.logout();
+              if (!context.mounted) return;
+              ScaffoldMessenger.of(context)
+                ..hideCurrentSnackBar()
+                ..showSnackBar(
+                  const SnackBar(
+                    behavior: SnackBarBehavior.floating,
+                    content: Text('Berhasil logout dari sesi saat ini.'),
+                  ),
+                );
+            }
           }
         },
         child: Container(
@@ -60,11 +85,7 @@ class ItemCard extends StatelessWidget {
                     color: Colors.white.withValues(alpha: 0.20),
                     shape: BoxShape.circle,
                   ),
-                  child: Icon(
-                    item.icon,
-                    color: Colors.white,
-                    size: 28.0,
-                  ),
+                  child: Icon(item.icon, color: Colors.white, size: 28.0),
                 ),
                 const SizedBox(height: 12.0),
                 Text(

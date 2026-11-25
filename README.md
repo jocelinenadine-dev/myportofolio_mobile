@@ -22,6 +22,7 @@
 | **Tugas 7** | Elemen Dasar Flutter | Kustomisasi identitas pribadi pada `InfoCard`, diferensiasi warna unik pada setiap `ItemCard` (`Colors.blue`, `Colors.green`, `Colors.red`), interaktivitas `SnackBar`, pengujian otomatis `widget_test.dart`, serta dokumentasi reflektif. | Selesai (100%) |
 | **Tutorial 09** | Navigation, Layouts, Forms, & Input | Pembuatan panel navigasi `LeftDrawer`, halaman formulir `ProjectFormPage` beserta validasi dan dialog `AlertDialog`, serta *refactoring* struktur direktori ke `lib/screens/` dan `lib/widgets/`. | Selesai (100%) |
 | **Tugas 8** | Flutter Navigation, Layouts, & Forms | Pembuatan halaman formulir baru `ExperienceFormPage` (`lib/screens/experience_form.dart`) dengan pemilih tanggal `showDatePicker()`, validasi komprehensif (teks wajib, panjang karakter, urutan tanggal, dan format URL), peningkatan antarmuka UI/UX bernuansa *Sage Green & Warm Ivory* responsif, integrasi navigasi pada `ItemCard` dan `LeftDrawer`, serta dokumentasi reflektif. | Selesai (100%) |
+| **Tutorial 10** | Backend Integration, Auth, & CI/CD | Konfigurasi DRF `TokenAuthentication` dan CORS pada backend Django, pemodelan JSON dengan `json_serializable`, integrasi HTTP (`ApiClient`) dan `FutureBuilder` pada `ProjectListScreen`/`ProjectDetailScreen`, manajemen sesi `AuthState` (`Provider`), `LoginScreen` & `ensureLoggedIn`, serta *pipeline* CI/CD GitHub Actions (`.github/workflows/main.yaml`). | Selesai (100%) |
 
 ---
 
@@ -35,33 +36,32 @@ Pastikan perangkat telah terpasang **Flutter SDK** (kanal `stable`, versi `>= 3.
 flutter doctor
 ```
 
-### 2. Kloning Repositori dan Instalasi Dependensi (Setup)
-Unduh kode sumber dari repositori GitHub dan pasang seluruh paket dependensi yang terdaftar pada `pubspec.yaml`:
+### 2. Kloning Repositori, Instalasi Dependensi, dan Code Generation (Setup)
+Unduh kode sumber dari repositori GitHub, pasang seluruh paket dependensi yang terdaftar pada `pubspec.yaml`, lalu bangkitkan berkas serialisasi JSON (`*.g.dart`):
 ```bash
 git clone https://github.com/jocelinenadine-dev/myportofolio_mobile.git
 cd myportofolio_mobile
 flutter pub get
+dart run build_runner build --delete-conflicting-outputs
 ```
 
 ### 3. Menjalankan Aplikasi (Run)
-Untuk menjalankan aplikasi secara cepat pada peramban web **Google Chrome**:
+Pastikan server backend Django (`python manage.py runserver`) sedang berjalan. Untuk menjalankan aplikasi pada peramban web **Google Chrome**:
 ```bash
-flutter run -d chrome
+flutter run -d chrome --dart-define=API_BASE_URL=http://localhost:8000
 ```
-Untuk menjalankan aplikasi pada **Android Emulator** atau perangkat fisik Android yang terhubung:
+Untuk menjalankan aplikasi pada **Android Emulator** (otomatis mengarah ke `http://10.0.2.2:8000`):
 ```bash
 flutter devices
 flutter run
 ```
 Saat aplikasi berjalan di terminal, tekan `r` untuk melakukan *Hot Reload*, `R` untuk melakukan *Hot Restart*, atau `q` untuk menghentikan sesi eksekusi.
 
-### 4. Analisis Kualitas Kode dan Pengujian Otomatis (Analyze & Test)
-Jalankan *static analysis* menggunakan *linter* resmi Flutter untuk memastikan tidak ada kesalahan sintaksis maupun pelanggaran konvensi gaya kode:
+### 4. Analisis Kualitas Kode dan Pengujian Otomatis (Format, Analyze, & Test)
+Jalankan pemformatan kode, *static analysis*, dan pengujian otomatis:
 ```bash
+dart format .
 flutter analyze
-```
-Jalankan rangkaian pengujian otomatis (*widget smoke & navigation test*) pada berkas `test/widget_test.dart` untuk memverifikasi rendering komponen `InfoCard`, kartu aksi `ItemCard`, navigasi menuju `ExperienceFormPage`, serta validasi formulir:
-```bash
 flutter test
 ```
 

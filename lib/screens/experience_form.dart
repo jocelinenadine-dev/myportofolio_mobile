@@ -110,10 +110,7 @@ class _ExperienceFormPageState extends State<ExperienceFormPage> {
           const SizedBox(height: 2.0),
           Text(
             value,
-            style: const TextStyle(
-              fontSize: 14.0,
-              color: Color(0xFF1F2B25),
-            ),
+            style: const TextStyle(fontSize: 14.0, color: Color(0xFF1F2B25)),
           ),
         ],
       ),
@@ -128,10 +125,7 @@ class _ExperienceFormPageState extends State<ExperienceFormPage> {
       appBar: AppBar(
         title: const Text(
           'Add Experience Form',
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          ),
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         backgroundColor: primaryColor,
         foregroundColor: Colors.white,
@@ -254,10 +248,12 @@ class _ExperienceFormPageState extends State<ExperienceFormPage> {
                           ),
                           initialValue: _category,
                           items: _categories
-                              .map((category) => DropdownMenuItem(
-                                    value: category,
-                                    child: Text(category),
-                                  ))
+                              .map(
+                                (category) => DropdownMenuItem(
+                                  value: category,
+                                  child: Text(category),
+                                ),
+                              )
                               .toList(),
                           onChanged: (String? newValue) {
                             setState(() {
@@ -283,7 +279,9 @@ class _ExperienceFormPageState extends State<ExperienceFormPage> {
                           ),
                           onTap: () => _selectStartDate(context),
                           validator: (String? value) {
-                            if (value == null || value.trim().isEmpty || _startDate == null) {
+                            if (value == null ||
+                                value.trim().isEmpty ||
+                                _startDate == null) {
                               return "Tanggal mulai wajib dipilih!";
                             }
                             return null;
@@ -346,10 +344,13 @@ class _ExperienceFormPageState extends State<ExperienceFormPage> {
                               if (_isOngoing) {
                                 return null;
                               }
-                              if (value == null || value.trim().isEmpty || _endDate == null) {
+                              if (value == null ||
+                                  value.trim().isEmpty ||
+                                  _endDate == null) {
                                 return "Tanggal selesai wajib dipilih jika sudah berakhir!";
                               }
-                              if (_startDate != null && _endDate!.isBefore(_startDate!)) {
+                              if (_startDate != null &&
+                                  _endDate!.isBefore(_startDate!)) {
                                 return "Tanggal selesai tidak boleh mendahului tanggal mulai!";
                               }
                               return null;
@@ -393,7 +394,8 @@ class _ExperienceFormPageState extends State<ExperienceFormPage> {
                         child: TextFormField(
                           keyboardType: TextInputType.url,
                           decoration: const InputDecoration(
-                            hintText: "https://contoh-dokumentasi.com (opsional)",
+                            hintText:
+                                "https://contoh-dokumentasi.com (opsional)",
                             labelText: "Tautan Dokumentasi / Sertifikat",
                             prefixIcon: Icon(Icons.link_rounded),
                           ),
@@ -407,8 +409,10 @@ class _ExperienceFormPageState extends State<ExperienceFormPage> {
                               return null;
                             }
                             final Uri? uri = Uri.tryParse(value.trim());
-                            final bool isValidUrl = uri != null &&
-                                (uri.scheme == 'http' || uri.scheme == 'https') &&
+                            final bool isValidUrl =
+                                uri != null &&
+                                (uri.scheme == 'http' ||
+                                    uri.scheme == 'https') &&
                                 uri.host.isNotEmpty &&
                                 uri.host.contains('.');
                             if (!isValidUrl) {
@@ -467,14 +471,33 @@ class _ExperienceFormPageState extends State<ExperienceFormPage> {
                                     ),
                                     content: SingleChildScrollView(
                                       child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
-                                          _buildSummaryRow('Judul / Posisi', _title.trim()),
-                                          _buildSummaryRow('Organisasi', _organization.trim()),
-                                          _buildSummaryRow('Kategori', _category),
-                                          _buildSummaryRow('Periode', periodeText),
-                                          _buildSummaryRow('Deskripsi', _description.trim()),
-                                          _buildSummaryRow('Tautan', tautanText),
+                                          _buildSummaryRow(
+                                            'Judul / Posisi',
+                                            _title.trim(),
+                                          ),
+                                          _buildSummaryRow(
+                                            'Organisasi',
+                                            _organization.trim(),
+                                          ),
+                                          _buildSummaryRow(
+                                            'Kategori',
+                                            _category,
+                                          ),
+                                          _buildSummaryRow(
+                                            'Periode',
+                                            periodeText,
+                                          ),
+                                          _buildSummaryRow(
+                                            'Deskripsi',
+                                            _description.trim(),
+                                          ),
+                                          _buildSummaryRow(
+                                            'Tautan',
+                                            tautanText,
+                                          ),
                                         ],
                                       ),
                                     ),
@@ -484,7 +507,9 @@ class _ExperienceFormPageState extends State<ExperienceFormPage> {
                                           backgroundColor: primaryColor,
                                           foregroundColor: Colors.white,
                                           shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(10.0),
+                                            borderRadius: BorderRadius.circular(
+                                              10.0,
+                                            ),
                                           ),
                                         ),
                                         child: const Text('OK'),

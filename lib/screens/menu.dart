@@ -23,9 +23,21 @@ class MyHomePage extends StatelessWidget {
   final String kelas = 'PBP A';
 
   final List<ItemHomepage> items = [
-    ItemHomepage("Lihat Proyek", Icons.folder_outlined, const Color(0xFF2563EB)),
-    ItemHomepage("Tambah Proyek", Icons.add_circle_outline, const Color(0xFF2E7D5B)),
-    ItemHomepage("Tambah Pengalaman", Icons.work_history_outlined, const Color(0xFF0F766E)),
+    ItemHomepage(
+      "Lihat Proyek",
+      Icons.folder_outlined,
+      const Color(0xFF2563EB),
+    ),
+    ItemHomepage(
+      "Tambah Proyek",
+      Icons.add_circle_outline,
+      const Color(0xFF2E7D5B),
+    ),
+    ItemHomepage(
+      "Tambah Pengalaman",
+      Icons.work_history_outlined,
+      const Color(0xFF0F766E),
+    ),
     ItemHomepage("Logout", Icons.logout_rounded, const Color(0xFFDC2626)),
   ];
 
@@ -65,10 +77,7 @@ class MyHomePage extends StatelessWidget {
                     padding: const EdgeInsets.all(24.0),
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
-                        colors: [
-                          primaryColor,
-                          const Color(0xFF2B473B),
-                        ],
+                        colors: [primaryColor, const Color(0xFF2B473B)],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                       ),
@@ -89,10 +98,7 @@ class MyHomePage extends StatelessWidget {
                           decoration: BoxDecoration(
                             color: accentColor.withValues(alpha: 0.22),
                             shape: BoxShape.circle,
-                            border: Border.all(
-                              color: accentColor,
-                              width: 1.8,
-                            ),
+                            border: Border.all(color: accentColor, width: 1.8),
                           ),
                           child: const Center(
                             child: Text(
@@ -276,11 +282,7 @@ class InfoCard extends StatelessWidget {
                 color: primaryColor.withValues(alpha: 0.10),
                 shape: BoxShape.circle,
               ),
-              child: Icon(
-                icon,
-                size: 18.0,
-                color: primaryColor,
-              ),
+              child: Icon(icon, size: 18.0, color: primaryColor),
             ),
             const SizedBox(height: 10.0),
             Text(
